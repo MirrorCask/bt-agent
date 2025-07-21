@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: bt-agent
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: bt-agent
+  template:
+    metadata:
+      labels:
+        app: bt-agent
+    spec:
+      containers:
+      - name: bt-agent
+        image: mirrorcask/bt-agent:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 2030
+        env:
+        - name: TRACKER_ANNOUNCE_URL
+          value: "http://tracker.kube-system.svc.cluster.local:6969/announce"
+        - name: BT_DIR
+          value: "/data/bt-data"
+        - name: BLOB_DIR
+          value: "/data/blobs"
+        - name: REGISTRY_URL
+          value: "registry-1.docker.io"
+        volumeMounts:
+        - name: bt-data
+          mountPath: /data/bt-data
+        - name: blob-dir
+          mountPath: /data/blobs
+      volumes:
+      - name: bt-data
+        hostPath:
+          path: /var/lib/bt-agent
+          type: DirectoryOrCreate
+      - name: blob-dir
+        hostPath:
+          path: /var/lib/containerd/io.containerd.content.v1.content/blobs/sha256
+          type: DirectoryOrCreate
