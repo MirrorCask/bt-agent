@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: bt-agent
-        image: mirrorcask/bt-agent:v1.0.7
+        image: mirrorcask/bt-agent:v1.0.8
         imagePullPolicy: Always
         ports:
         - containerPort: 2030

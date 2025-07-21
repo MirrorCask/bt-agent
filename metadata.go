@@ -25,7 +25,7 @@ func GetInfohash(digest string) (string, error) {
 		return "", err
 	}
 	params.Set("digest", digest)
-	Url.Path = "/infohash"
+	Url.Path = "/query"
 	Url.RawQuery = params.Encode()
 	resp, err := http.Get(Url.String())
 	if err != nil {
