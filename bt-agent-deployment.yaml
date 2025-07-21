@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: bt-agent
-        image: mirrorcask/bt-agent:v1.0.4
+        image: mirrorcask/bt-agent:v1.0.7
         imagePullPolicy: Always
         ports:
         - containerPort: 2030
@@ -24,22 +24,16 @@ spec:
         - name: TRACKER_ANNOUNCE_URL
           value: "http://chihaya-service:6969/announce"
         - name: BT_DIR
-          value: "/data/bt-data"
+          value: "/var/lib/bt-agent"
         - name: BLOB_DIR
-          value: "/data/blobs"
+          value: "/var/lib/containerd/io.containerd.content.v1.content/blobs/sha256"
         - name: REGISTRY_URL
           value: "registry-1.docker.io"
         volumeMounts:
-        - name: bt-data
-          mountPath: /data/bt-data
-        - name: blob-dir
-          mountPath: /data/blobs
+        - name: data
+          mountPath: /var/lib
       volumes:
-      - name: bt-data
+      - name: data
         hostPath:
-          path: /var/lib/bt-agent
-          type: DirectoryOrCreate
-      - name: blob-dir
-        hostPath:
-          path: /var/lib/containerd/io.containerd.content.v1.content/blobs/sha256
+          path: /var/lib
           type: DirectoryOrCreate

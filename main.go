@@ -16,18 +16,23 @@ func main() {
 	listenPort := "2030"
 	btDir := os.Getenv("BT_DIR")
 	if btDir == "" {
-		btDir = "./bt-data"
-		log.Println("BT_DIR is not set, using default: ./bt-data")
+		btDir = "/var/lib/bt-agent"
+		log.Println("BT_DIR is not set, using default: /var/lib/bt-agent")
 	}
 	blobDir := os.Getenv("BLOB_DIR")
 	if blobDir == "" {
-		blobDir = "/data/blobs"
-		log.Println("BLOB_DIR is not set, using default: /data/blobs")
+		blobDir = "/var/lib/containerd/io.containerd.content.v1.content/blobs/sha256"
+		log.Println("BLOB_DIR is not set, using default: /var/lib/containerd/io.containerd.content.v1.content/blobs/sha256")
 	}
 	registryURL := os.Getenv("REGISTRY_URL")
 	if registryURL == "" {
 		registryURL = "https://registry-1.docker.io"
 		log.Println("REGISTRY_URL is not set, using default: https://registry-1.docker.io")
+	}
+
+	err := os.MkdirAll(btDir, 0755)
+	if err != nil && !os.IsExist(err) {
+		log.Fatalf("Failed to create BT directory %s: %v", btDir, err)
 	}
 
 	cfg := torrent.NewDefaultClientConfig()
