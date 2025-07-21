@@ -14,13 +14,13 @@ spec:
     spec:
       containers:
       - name: bt-agent
-        image: mirrorcask/bt-agent:v1.0.1
+        image: mirrorcask/bt-agent:v1.0.2
         imagePullPolicy: Always
         ports:
         - containerPort: 2030
         env:
         - name: METASERVICE_URL
-          value: "http://metaservice.kube-system.svc.cluster.local:8080"
+          value: "http://metadata-service.kube-system.svc.cluster.local:8080"
         - name: TRACKER_ANNOUNCE_URL
           value: "http://tracker.kube-system.svc.cluster.local:6969/announce"
         - name: BT_DIR
