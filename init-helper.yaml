@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: init-helper
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: init-helper
+  template:
+    metadata:
+      labels:
+        app: init-helper
+    spec:
+      hostPID: true
+      containers:
+      - name: init-helper
+        image: alpine:3
+        securityContext:
+          privileged: true
+        command:
+          - /bin/sh
+          - -c
+          - sleep infinity
+        volumeMounts:
+          - name: host-root
+            mountPath: /host
+      volumes:
+        - name: host-root
+          hostPath:
+            path: /
