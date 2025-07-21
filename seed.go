@@ -35,7 +35,7 @@ func CalcInfoHashFromFile(filePath string, pieceLength int64) (string, error) {
 func SeedFromFile(digest, filePath string, client *torrent.Client) error {
 	trackerAnnounceURL := os.Getenv("TRACKER_ANNOUNCE_URL")
 	if trackerAnnounceURL == "" {
-		trackerAnnounceURL = "chihaya-service:6969/announce"
+		trackerAnnounceURL = "http://chihaya-service:6969/announce"
 		log.Println("TRACKER_ANNOUNCE_URL is not set, using default:", trackerAnnounceURL)
 	}
 

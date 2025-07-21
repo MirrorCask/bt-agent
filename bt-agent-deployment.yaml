@@ -14,15 +14,15 @@ spec:
     spec:
       containers:
       - name: bt-agent
-        image: mirrorcask/bt-agent:v1.0.3
+        image: mirrorcask/bt-agent:v1.0.4
         imagePullPolicy: Always
         ports:
         - containerPort: 2030
         env:
         - name: METASERVICE_URL
-          value: "metadata-service:8080"
+          value: "http://metadata-service:8080"
         - name: TRACKER_ANNOUNCE_URL
-          value: "chihaya-service:6969/announce"
+          value: "http://chihaya-service:6969/announce"
         - name: BT_DIR
           value: "/data/bt-data"
         - name: BLOB_DIR
