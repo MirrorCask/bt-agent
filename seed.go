@@ -80,7 +80,7 @@ func InitSeed(blobPath, algo string, m *BlobTaskManager) {
 	for _, entry := range entries {
 		if !entry.IsDir() {
 			digest := algo + ":" + entry.Name()
-			srcPath := filepath.Join(blobPath, digest)
+			srcPath := filepath.Join(blobPath, entry.Name())
 			destPath := filepath.Join(m.dataDir, digest)
 			err := os.Link(srcPath, destPath)
 			if !os.IsExist(err) {
