@@ -16,7 +16,7 @@ import (
 func GetInfohash(digest string) (string, error) {
 	metaservice_url := os.Getenv("METASERVICE_URL")
 	if metaservice_url == "" {
-		metaservice_url = "http://metaservice.kube-system.svc.cluster.local:80"
+		metaservice_url = "http://metaservice.kube-system.svc.cluster.local:8080"
 		log.Println("METASERVICE_URL is not set, using default: %s", metaservice_url)
 	}
 	params := url.Values{}

@@ -53,7 +53,7 @@ func (m *BlobTaskManager) RunTask(task *BlobTask) {
 	if infohash == "" {
 		infohash, err := GetInfohash(task.Digest)
 		if err != nil {
-			log.Printf("Error getting infohash for digest %s: %v", task.Digest)
+			log.Printf("Error getting infohash for digest %s: %v", task.Digest, err)
 			task.Status = BlobStatusError
 			close(task.Fallback)
 			return

@@ -141,6 +141,8 @@ func FallbackDownload(c *gin.Context, m *BlobTaskManager, task *BlobTask) {
 }
 
 func handleGetBlob(c *gin.Context, m *BlobTaskManager, digest, repoName string) {
+	log.Printf("handleGetBlob: %s, %s", digest, repoName)
+
 	task := m.AddTask(digest, "", repoName)
 
 	select {
