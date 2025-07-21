@@ -79,12 +79,12 @@ func InitSeed(blobPath, algo string, m *BlobTaskManager) {
 	}
 	for _, entry := range entries {
 		if !entry.IsDir() {
-			digest := filepath.Join(algo, ":", entry.Name())
+			digest := algo + ":" + entry.Name()
 			srcPath := filepath.Join(blobPath, digest)
 			destPath := filepath.Join(m.dataDir, digest)
 			err := os.Link(srcPath, destPath)
 			if !os.IsExist(err) {
-				log.Println("Unable to create hard link for", digest)
+				log.Println("Unable to create hard link for ", digest, ":", err)
 			}
 		}
 	}
