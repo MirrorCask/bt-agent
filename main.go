@@ -60,7 +60,6 @@ func main() {
 	router := gin.Default()
 	v2 := router.Group("/v2")
 	{
-		v2.Any("/", proxyHandler)
 		// why cannot use /*repo/blobs/:digest wtf
 		v2.Any("/*path", func(c *gin.Context) {
 			path := c.Param("path")
