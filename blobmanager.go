@@ -69,9 +69,9 @@ func (m *BlobTaskManager) RunTask(task *BlobTask) {
 	}
 
 	task.mu.Unlock()
-	trackerAnnouncement := os.Getenv("TRACKER_ANNOUNCEMENT")
+	trackerAnnouncement := os.Getenv("TRACKER_ANNOUNCE_URL")
 	if trackerAnnouncement == "" {
-		trackerAnnouncement = "http://tracker.kube-system.svc.cluster.local:80/announce"
+		trackerAnnouncement = "http://chihaya-service:6969/announce"
 		log.Println("TRACKER_ANNOUNCEMENT is not set, using default:", trackerAnnouncement)
 	}
 	task.mu.Lock()
