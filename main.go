@@ -54,6 +54,7 @@ func main() {
 
 	proxy := httputil.NewSingleHostReverseProxy(remoteURL)
 	proxy.Director = func(req *http.Request) {
+		log.Printf("Proxy request: %s %s", req.Method, req.URL.Path)
 		req.URL.Scheme = remoteURL.Scheme
 		req.URL.Host = remoteURL.Host
 		req.Host = remoteURL.Host
