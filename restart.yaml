@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: containerd-restarter
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      name: containerd-restarter
+  template:
+    metadata:
+      labels:
+        name: containerd-restarter
+    spec:
+      hostPID: true
+      hostNetwork: true
+      containers:
+      - name: containerd-restarter-container
+        image: ubuntu:20.04
+        command: ["/bin/bash", "-c"]
+        args:
+        - |
+          nsenter -t 1 -m -u -n -i -- systemctl restart containerd
+          echo "containerd on $(hostname) restarted. Sleeping for infinity to keep the pod alive."
+          sleep infinity
+        securityContext:
+          privileged: true

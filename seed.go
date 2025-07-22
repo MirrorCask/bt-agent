@@ -95,10 +95,26 @@ func InitSeed(blobPath, algo string, m *BlobTaskManager) {
 	}
 	for _, entry := range entries {
 		if !entry.IsDir() {
-			m.AddTask(entry.Name(), "", "")
+			digest := entry.Name()
+			infohash, err := GetInfohash(digest)
 			if err != nil {
-				log.Printf("Enable to seed file %s: %v", entry.Name(), err)
+				log.Printf("Unable to get infohash for digest %s: %v", digest, err)
 			}
+			if infohash == "" {
+				log.Printf("No infohash found for digest %s, calculating it now", digest)
+				srcPath := filepath.Join(m.dataDir, entry.Name())
+				infoHash, err := CalcInfoHashFromFile(srcPath, 262144)
+				if err != nil {
+					log.Printf("Unable to calculate infohash for digest %s: %v", digest, err)
+					continue
+				}
+				infohash = infoHash
+				if err := Modify(digest, infohash); err != nil {
+					log.Printf("Unable to modify infohash for digest %s: %v", digest, err)
+					continue
+				}
+			}
+			m.AddTask(digest, infohash, "")
 		}
 	}
 }

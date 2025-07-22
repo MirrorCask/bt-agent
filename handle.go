@@ -15,6 +15,7 @@ import (
 )
 
 func P2PDownload(c *gin.Context, task *BlobTask) {
+	log.Printf("P2PDownload: %s", task.Digest)
 	task.mu.Lock()
 	t := task.Torrent
 	task.mu.Unlock()

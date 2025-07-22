@@ -27,6 +27,7 @@ func NewBlobTaskManager(btClient *torrent.Client, dataDir, registryURL string) *
 }
 
 func (m *BlobTaskManager) AddTask(digest, infohash, repoName string) *BlobTask {
+	log.Printf("AddTask: %s, %s, %s", digest, infohash, repoName)
 	m.mu.Lock()
 	defer m.mu.Unlock()
 	if task, exists := m.Tasks[digest]; exists {
@@ -47,6 +48,7 @@ func (m *BlobTaskManager) AddTask(digest, infohash, repoName string) *BlobTask {
 }
 
 func (m *BlobTaskManager) RunTask(task *BlobTask) {
+	log.Printf("RunTask: %s", task.Digest)
 	task.mu.Lock()
 	defer task.mu.Unlock()
 	infohash := task.Infohash
