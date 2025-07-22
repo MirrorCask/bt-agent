@@ -88,5 +88,5 @@ func main() {
 			proxyHandler(c)
 		})
 	}
-	router.Run(":" + listenPort)
+	router.Run("127.0.0.1:" + listenPort)
 }
