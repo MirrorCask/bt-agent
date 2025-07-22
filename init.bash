@@ -1,2 +1,2 @@
-kubectl apply -f init-helper.yaml
+#!/bin/bash
 kubectl apply -f bt-agent-deployment.yaml
